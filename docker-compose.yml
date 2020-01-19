@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  app:
+    container_name: simple-react-full-stack
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - '0.0.0.0:3000:3000'
+    environment:
+      - NODE_ENV=development
