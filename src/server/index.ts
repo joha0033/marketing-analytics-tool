@@ -1,8 +1,8 @@
 import express = require('express');
 import os = require('os');
 import mongoose from 'mongoose';
-import bodyParse from 'body-parser';
 import {sourceRouter} from './routes';
+import Observer from './services/Observer';
 
 const app = express();
 app.use(express.json());
@@ -12,6 +12,9 @@ mongoose
   .connect(db, {useNewUrlParser: true})
   .then(() => console.log(`Mongodb Connected`))
   .catch(error => console.log(error));
+
+const observer = new Observer();
+observer.watchFile('./data');
 
 app.use('/api/sources', sourceRouter);
 
