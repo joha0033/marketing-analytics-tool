@@ -1,5 +1,5 @@
-import {UserController} from './User/User';
+import {SourceController} from './Source/Source';
 
-const userController = new UserController();
+const sourceController = new SourceController();
 
-export {userController};
+export {sourceController};

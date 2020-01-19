@@ -9,7 +9,14 @@ services:
     volumes:
       - '.:/app'
       - '/app/node_modules'
+    links:
+      - mongo
     ports:
       - '0.0.0.0:3000:3000'
     environment:
       - NODE_ENV=development
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - '27017:27017'
