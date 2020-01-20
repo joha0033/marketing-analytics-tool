@@ -35,6 +35,7 @@ yarn dev
 - [ESLint](https://eslint.org/)
 - [Prettier](https://prettier.io/)
 - [Docker](https://www.docker.com/)
+- [MongoDB](https://www.mongodb.com/)
 
 ### Folder Structure
 
