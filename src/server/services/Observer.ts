@@ -1,4 +1,6 @@
 import chokidar from 'chokidar';
+import fs from 'fs';
+import path from 'path';
 import {EventEmitter} from 'events';
 
 class Observer extends EventEmitter {
@@ -6,25 +8,23 @@ class Observer extends EventEmitter {
     super();
   }
 
-  watchFile(targetFile: string) {
+  public watchFile(targetFile: string) {
     try {
       console.log(`[${new Date().toLocaleString()}] Watching for file changes on: ${targetFile}`);
+      const watcher = chokidar.watch(targetFile, {persistent: true});
 
-      var watcher = chokidar.watch(targetFile, {persistent: true});
+      watcher.on('add', function(filePath) {
+        const filename = path.basename(filePath);
+        const directory = path.dirname(filePath);
 
-      watcher
-        .on('add', function(path) {
-          console.log('File', path, 'has been added');
-        })
-        .on('change', function(path) {
-          console.log('File', path, 'has been changed');
-        })
-        .on('unlink', function(path: string) {
-          console.log('File', path, 'has been removed');
-        })
-        .on('error', function(error: Error) {
-          console.error('Error happened', error);
+        const newPath = directory + '/processed/' + filename;
+        fs.rename(filePath, newPath, function(err) {
+          if (err) {
+            console.warn(err);
+          }
+          console.log('Successfully renamed - AKA moved!');
         });
+      });
     } catch (error) {
       console.log(error);
     }

@@ -1,3 +1,3 @@
-import {router as sourceRouter} from './Source/Source';
+import {router as clickDataRouter} from './ClickData/ClickData';
 
-export {sourceRouter};
+export {clickDataRouter};

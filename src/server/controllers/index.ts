@@ -1,5 +1,5 @@
-import {SourceController} from './Source/Source';
+import {ClickDataController} from './ClickData/ClickData';
 
-const sourceController = new SourceController();
+const clickDataController = new ClickDataController();
 
-export {sourceController};
+export {clickDataController};

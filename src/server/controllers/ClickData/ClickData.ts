@@ -1,17 +1,25 @@
 import {Request, Response} from 'express';
 import {CRUDController} from '../CRUDController';
 
-import {Source} from '../../models/Source';
+import {ClickData} from '../../models/ClickData';
 
-export class SourceController extends CRUDController {
-  public create(req: Request<import('express-serve-static-core').ParamsDictionary>, res: Response): void {
-    throw new Error('Method not implemented.');
+export class ClickDataController extends CRUDController {
+  public async create(
+    req: Request<import('express-serve-static-core').ParamsDictionary>,
+    res: Response
+  ): Promise<void> {
+    const newData = new ClickData({
+      name: req.body.name
+    });
+
+    await newData.save();
+    res.json(newData);
   }
 
   public read(req: Request<import('express-serve-static-core').ParamsDictionary>, res: Response): void {
-    Source.find({}, (err, sources) => {
+    ClickData.find({}, (err, sources) => {
       res.json({
-        sources: Object.keys(sources).length > 0 ? sources : {}
+        clicks: Object.keys(sources).length > 0 ? sources : {}
       });
     });
   }

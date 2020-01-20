@@ -12,6 +12,7 @@
     "experimentalDecorators": true,
     "declaration": false,
     "removeComments": true,
+    "noImplicitThis": false,
     "noImplicitReturns": true,
     "noUnusedLocals": false,
     "strict": true,
