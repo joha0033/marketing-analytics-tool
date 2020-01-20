@@ -9,7 +9,10 @@ export class ClickDataController extends CRUDController {
     res: Response
   ): Promise<void> {
     const newData = new ClickData({
-      name: req.body.name
+      product: req.body.product,
+      createdAt: req.body.createdAt,
+      source: req.body.source,
+      clicks: req.body.clicks
     });
 
     await newData.save();
