@@ -39,3 +39,11 @@ yarn dev
 ### Folder Structure
 
 All the source code will be inside **src** directory. Inside src, there is client and server directory. All the frontend code (react, css, js and any other assets) will be in client directory. Backend Node.js/Express code will be in the server directory.
+
+### Wishlist:
+
+- [ ] Split Observer.ts in to it's own microservice that has options to monitor an FTP location.
+- [ ] Add more API endpoints for creating products, services, etc
+- [ ] Validation of products and services, right now it's pretty open
+- [ ] Authentication!!! This ain't a free service.
+- [ ] More tests.
