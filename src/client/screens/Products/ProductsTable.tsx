@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     marginBottom: 20
   },
   table: {
-    minWidth: 650
+    minWidth: 500
   },
   visuallyHidden: {
     border: 0,
@@ -110,7 +110,7 @@ export default function ProductsTable() {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('id');
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const handleRequestSort = (event: any, property: React.SetStateAction<string>) => {
     const isAsc = orderBy === property && order === 'asc';
