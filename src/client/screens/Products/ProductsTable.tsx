@@ -11,7 +11,8 @@ import {useEffect} from 'react';
 import {Sources} from '../../constants/SourceMap';
 import {TablePagination} from '@material-ui/core';
 import EnhancedTableHeader from '../../components/EnhancedTableHeader';
-import {stableSort, getSorting} from 'client/utilities/Sorting';
+import {stableSort, getSorting} from '../../utilities/Sorting';
+import SearchBar from '../../components/SearchBar';
 
 const useStyles = makeStyles({
   root: {
@@ -48,6 +49,7 @@ const headCells = [
 ];
 
 export default function ProductsTable() {
+  const [keyword, setKeyword] = React.useState('');
   const [data, setData] = React.useState([]);
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('id');
@@ -75,12 +77,12 @@ export default function ProductsTable() {
   };
 
   useEffect(() => {
-    fetch('/api/productstatistics')
+    fetch('/api/productstatistics' + (keyword.length > 1 ? `?keyword=${keyword}` : ''))
       .then(results => results.json())
       .then(data => {
         setData(arrangeDataForTable(data.productstatistics));
       });
-  }, []);
+  }, [keyword]);
 
   const handleChangePage = (event: any, newPage: React.SetStateAction<number>) => {
     setPage(newPage);
@@ -96,6 +98,7 @@ export default function ProductsTable() {
   const classes = useStyles();
   return (
     <Paper className={classes.paper}>
+      <SearchBar onChange={setKeyword} />
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label='table' size='small'>
           <EnhancedTableHeader
