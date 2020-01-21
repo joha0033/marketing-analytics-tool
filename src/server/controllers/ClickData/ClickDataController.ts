@@ -21,9 +21,9 @@ export class ClickDataController extends CRUDController {
   }
 
   public read(req: Request<import('express-serve-static-core').ParamsDictionary>, res: Response): void {
-    ClickData.find({}, (err, sources) => {
+    ClickData.find({}, (err, clicks) => {
       res.json({
-        clicks: Object.keys(sources).length > 0 ? sources : {}
+        clicks: Object.keys(clicks).length > 0 ? clicks : {}
       });
     });
   }
