@@ -10,6 +10,12 @@
 docker-compose up --build
 ```
 
+If you make changes to the `package.json` remember to rebuild with no cache:
+
+```
+docker-compose build --no-cache
+```
+
 ### Developing locally
 
 ```bash

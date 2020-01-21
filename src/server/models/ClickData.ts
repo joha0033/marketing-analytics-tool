@@ -2,6 +2,7 @@ import {Document, Schema, Model, model} from 'mongoose';
 
 export interface IClickData {
   product: string;
+  productName: string;
   createdAt: Date;
   source: string;
   clicks: number;
@@ -14,6 +15,7 @@ export interface IClickDataModel extends IClickData, Document {
 export var ClickDataSchema: Schema = new Schema({
   createdAt: Date,
   product: String,
+  productName: String,
   source: String,
   clicks: Number
 });

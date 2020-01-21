@@ -4,6 +4,7 @@ import {parse} from 'fast-csv';
 import {ClickData} from '../models/ClickData';
 
 import path from 'path';
+import Mapper from './Mapper';
 
 class ClickDataParser {
   static parseFile(targetFile: string) {
@@ -32,7 +33,10 @@ class ClickDataParser {
             const product = row[0];
             const clicks = row[1];
 
+            const mappingData = Mapper.mapProduct(product);
+
             const newData = new ClickData({
+              productName: mappingData.productName,
               product: product,
               createdAt: new Date(year, month, day),
               source: source,
