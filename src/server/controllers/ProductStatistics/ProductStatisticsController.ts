@@ -8,8 +8,14 @@ export class ProductStatisticsController extends CRUDController {
   }
 
   public read(req: Request<import('express-serve-static-core').ParamsDictionary>, res: Response): void {
+    let query = new RegExp('.*');
+
+    if (!!req.query.keyword) {
+      query = new RegExp('.*' + req.query.keyword + '.*', 'i');
+    }
     ClickData.aggregate(
       [
+        {$match: {productName: query}},
         {
           $group: {
             _id: {

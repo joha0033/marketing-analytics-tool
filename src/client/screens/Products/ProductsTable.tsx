@@ -4,13 +4,14 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {useEffect} from 'react';
 
 import {Sources} from '../../constants/SourceMap';
-import {TableSortLabel, TablePagination} from '@material-ui/core';
+import {TablePagination} from '@material-ui/core';
+import EnhancedTableHeader from '../../components/EnhancedTableHeader';
+import {stableSort, getSorting} from 'client/utilities/Sorting';
 
 const useStyles = makeStyles({
   root: {
@@ -36,30 +37,6 @@ const useStyles = makeStyles({
   }
 });
 
-function desc(a: {[x: string]: number}, b: {[x: string]: number}, orderBy: string | number) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-function stableSort(array: any[], cmp: (arg0: any, arg1: any) => any) {
-  const stabilizedThis = array.map((el: any, index: any) => [el, index]);
-  stabilizedThis.sort((a: number[], b: number[]) => {
-    const order = cmp(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el: any[]) => el[0]);
-}
-
-function getSorting(order: string, orderBy: any) {
-  return order === 'desc' ? (a: any, b: any) => desc(a, b, orderBy) : (a: any, b: any) => -desc(a, b, orderBy);
-}
-
 const headCells = [
   {id: 'id', numeric: false, disablePadding: false, label: 'ID'},
   {id: 'name', numeric: false, disablePadding: false, label: 'Name'},
@@ -69,41 +46,6 @@ const headCells = [
   {id: 'linkedin', numeric: true, disablePadding: false, label: 'LinkedIn'},
   {id: 'twitter', numeric: true, disablePadding: false, label: 'Twitter'}
 ];
-
-function EnhancedTableHead(props: {classes: any; order: any; orderBy: any; onRequestSort: any}) {
-  const {classes, order, orderBy, onRequestSort} = props;
-  const createSortHandler = (property: any) => (event: any) => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead>
-      <TableRow>
-        {headCells.map(headCell => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'default'}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <span className={classes.visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </span>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
 
 export default function ProductsTable() {
   const [data, setData] = React.useState([]);
@@ -156,7 +98,13 @@ export default function ProductsTable() {
     <Paper className={classes.paper}>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label='table' size='small'>
-          <EnhancedTableHead classes={classes} order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
+          <EnhancedTableHeader
+            headCells={headCells}
+            classes={classes}
+            order={order}
+            orderBy={orderBy}
+            onRequestSort={handleRequestSort}
+          />
           <TableBody>
             {stableSort(data, getSorting(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
