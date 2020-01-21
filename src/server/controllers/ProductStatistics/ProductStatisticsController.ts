@@ -14,12 +14,43 @@ export class ProductStatisticsController extends CRUDController {
           $group: {
             _id: {
               product: '$product',
+              productName: '$productName',
               source: '$source'
             },
             totalClicksBySource: {$sum: '$clicks'}
           }
         },
-        {$project: {_id: 1, totalClicksBySource: 1}}
+        {
+          $project: {
+            doc: {
+              _id: {
+                product: '$_id.product',
+                productName: '$_id.productName',
+                source: '$_id.source'
+              },
+              totalClicksBySource: '$totalClicksBySource'
+            }
+          }
+        },
+        {
+          $group: {
+            _id: {
+              product: '$_id.product',
+              productName: '$_id.productName'
+            },
+            result: {
+              $push: {
+                source: '$doc._id.source',
+                clicks: '$doc.totalClicksBySource'
+              }
+            }
+          }
+        },
+        {
+          $project: {
+            result: 1
+          }
+        }
       ],
       (err, stats) => {
         res.json({

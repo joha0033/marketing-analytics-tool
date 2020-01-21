@@ -9,6 +9,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {useEffect} from 'react';
 
+import {Sources} from '../../constants/SourceMap';
+
 const useStyles = makeStyles({
   table: {
     minWidth: 650
@@ -19,11 +21,10 @@ export default function ProductsTable() {
   const [data, setData] = React.useState([]);
 
   useEffect(() => {
-    fetch('/api/clicks')
+    fetch('/api/productstatistics')
       .then(results => results.json())
       .then(data => {
-        console.warn(data.clicks);
-        setData(data.clicks);
+        setData(data.productstatistics);
       });
   }, []);
 
@@ -34,24 +35,37 @@ export default function ProductsTable() {
         <TableHead>
           <TableRow>
             <TableCell>Product</TableCell>
-            <TableCell align='right'>Product Name</TableCell>
-            <TableCell align='right'>Total Clicks</TableCell>
+            <TableCell>Product Name</TableCell>
+            <TableCell align='right'>Clicks Amazon</TableCell>
+            <TableCell align='right'>Clicks Facebook</TableCell>
+            <TableCell align='right'>Clicks Google</TableCell>
+            <TableCell align='right'>Clicks LinkedIn</TableCell>
+            <TableCell align='right'>Clicks Twitter</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {data.map(
-            (row: {
-              id: string;
-              productName: string | number | undefined;
-              product: React.ReactNode;
-              clicks: React.ReactNode;
-            }) => (
-              <TableRow key={row.id}>
+            (row: {_id: {productName: string; product: string}; result: [{source: string; clicks: string}]}) => (
+              <TableRow key={row._id.product}>
                 <TableCell component='th' scope='row'>
-                  {row.product}
+                  {row._id.product}
                 </TableCell>
-                <TableCell align='right'>{row.productName}</TableCell>
-                <TableCell align='right'>{row.clicks}</TableCell>
+                <TableCell>{row._id.productName}</TableCell>
+                <TableCell align='right'>
+                  {row.result.find(r => r.source === Sources.Amazon.valueOf())?.clicks}
+                </TableCell>
+                <TableCell align='right'>
+                  {row.result.find(r => r.source === Sources.Facebook.valueOf())?.clicks}
+                </TableCell>
+                <TableCell align='right'>
+                  {row.result.find(r => r.source === Sources.Google.valueOf())?.clicks}
+                </TableCell>
+                <TableCell align='right'>
+                  {row.result.find(r => r.source === Sources.LinkedIn.valueOf())?.clicks}
+                </TableCell>
+                <TableCell align='right'>
+                  {row.result.find(r => r.source === Sources.Twitter.valueOf())?.clicks}
+                </TableCell>
               </TableRow>
             )
           )}
