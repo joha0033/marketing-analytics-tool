@@ -6,6 +6,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Products from './Products';
+import Dashboard from './Dashboard';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -61,7 +62,7 @@ export default function SimpleTabs() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        Item One
+        <Dashboard />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Products />

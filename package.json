@@ -23,7 +23,8 @@
     "fast-csv": "^4.0.2",
     "mongoose": "^5.8.9",
     "react": "16.12.0",
-    "react-dom": "16.12.0"
+    "react-dom": "16.12.0",
+    "recharts": "^2.0.0-beta.1"
   },
   "jest": {
     "testEnvironment": "node",
@@ -44,6 +45,7 @@
     "@types/node": "13.1.8",
     "@types/react": "16.9.17",
     "@types/react-dom": "16.9.4",
+    "@types/recharts": "^1.8.5",
     "awesome-typescript-loader": "5.2.1",
     "babel-eslint": "10.0.3",
     "babel-loader": "8.0.6",
@@ -68,5 +70,9 @@
     "webpack": "4.41.5",
     "webpack-cli": "3.3.10",
     "webpack-dev-server": "3.10.1"
+  },
+  "resolutions": {
+    "@types/react": "16.9.17",
+    "@types/react-dom": "16.9.4"
   }
 }
