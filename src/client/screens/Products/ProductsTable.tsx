@@ -6,21 +6,13 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {useEffect} from 'react';
-
-import {Sources} from '../../constants/SourceMap';
-import {TablePagination} from '@material-ui/core';
+import {TablePagination, Divider} from '@material-ui/core';
 import EnhancedTableHeader from '../../components/EnhancedTableHeader';
 import {stableSort, getSorting} from '../../utilities/Sorting';
-import SearchBar from '../../components/SearchBar';
 
 const useStyles = makeStyles({
   root: {
     width: '100%'
-  },
-  paper: {
-    width: '100%',
-    marginBottom: 20
   },
   table: {
     minWidth: 500
@@ -48,9 +40,8 @@ const headCells = [
   {id: 'twitter', numeric: true, disablePadding: false, label: 'Twitter'}
 ];
 
-export default function ProductsTable() {
-  const [keyword, setKeyword] = React.useState('');
-  const [data, setData] = React.useState([]);
+export default function ProductsTable(props: {data: any}) {
+  const {data} = props;
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('id');
   const [page, setPage] = React.useState(0);
@@ -61,28 +52,6 @@ export default function ProductsTable() {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-
-  const arrangeDataForTable = (data: any) => {
-    return data.map(
-      (row: {_id: {productName: string; product: string}; result: [{source: string; clicks: string}]}) => ({
-        id: row._id.product,
-        productName: row._id.productName,
-        amazon: row.result.find(r => r.source === Sources.Amazon.valueOf())?.clicks,
-        facebook: row.result.find(r => r.source === Sources.Facebook.valueOf())?.clicks,
-        google: row.result.find(r => r.source === Sources.Google.valueOf())?.clicks,
-        linkedin: row.result.find(r => r.source === Sources.LinkedIn.valueOf())?.clicks,
-        twitter: row.result.find(r => r.source === Sources.Twitter.valueOf())?.clicks
-      })
-    );
-  };
-
-  useEffect(() => {
-    fetch('/api/productstatistics' + (keyword.length > 1 ? `?keyword=${keyword}` : ''))
-      .then(results => results.json())
-      .then(data => {
-        setData(arrangeDataForTable(data.productstatistics));
-      });
-  }, [keyword]);
 
   const handleChangePage = (event: any, newPage: React.SetStateAction<number>) => {
     setPage(newPage);
@@ -97,8 +66,8 @@ export default function ProductsTable() {
 
   const classes = useStyles();
   return (
-    <Paper className={classes.paper}>
-      <SearchBar onChange={setKeyword} />
+    <>
+      <Divider variant='fullWidth' />
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label='table' size='small'>
           <EnhancedTableHeader
@@ -151,6 +120,6 @@ export default function ProductsTable() {
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
-    </Paper>
+    </>
   );
 }

@@ -1,5 +1,4 @@
 import express = require('express');
-import os = require('os');
 import mongoose from 'mongoose';
 import {clickDataRouter, productStatisticsRouter} from './routes';
 import Observer from './services/Observer';

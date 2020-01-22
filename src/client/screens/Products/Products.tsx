@@ -1,11 +1,11 @@
 import * as React from 'react';
-import ProductsTable from './ProductsTable';
+import ProductsContainer from './ProductsContainer';
 
 export default class Products extends React.Component {
   render() {
     return (
       <div>
-        <ProductsTable />
+        <ProductsContainer />
       </div>
     );
   }

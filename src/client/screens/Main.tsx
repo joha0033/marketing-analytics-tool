@@ -6,7 +6,6 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Products from './Products';
-import Dashboard from './Dashboard';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -57,14 +56,10 @@ export default function SimpleTabs() {
     <div className={classes.root}>
       <AppBar position='static'>
         <Tabs value={value} onChange={handleChange} aria-label='simple tabs example'>
-          <Tab label='Dashboard' {...a11yProps(0)} />
-          <Tab label='Products' {...a11yProps(1)} />
+          <Tab label='Products' {...a11yProps(0)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <Dashboard />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
         <Products />
       </TabPanel>
     </div>

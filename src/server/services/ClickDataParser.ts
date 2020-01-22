@@ -1,4 +1,3 @@
-import {EventEmitter} from 'events';
 import fs from 'fs';
 import {parse} from 'fast-csv';
 import {ClickData} from '../models/ClickData';

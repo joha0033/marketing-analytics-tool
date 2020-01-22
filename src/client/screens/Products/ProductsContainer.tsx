@@ -1,11 +1,25 @@
 import * as React from 'react';
-import BarChart from '../../components/BarChart';
-import {Sources} from '../../constants/SourceMap';
+import {makeStyles} from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import {useEffect} from 'react';
 
-export default function Dashboard() {
+import {Sources} from '../../constants/SourceMap';
+import SearchBar from '../../components/SearchBar';
+import BarChart from '../../components/BarChart';
+import ProductsTable from './ProductsTable';
+
+const useStyles = makeStyles({
+  paper: {
+    width: '100%',
+    marginBottom: 20
+  }
+});
+
+export default function ProductsContainer() {
+  const [keyword, setKeyword] = React.useState('');
   const [data, setData] = React.useState([]);
 
-  const arrangeDataForBarChart = (data: any[]) => {
+  const arrangeData = (data: any) => {
     return data.map(
       (row: {_id: {productName: string; product: string}; result: [{source: string; clicks: string}]}) => ({
         id: row._id.product,
@@ -19,17 +33,20 @@ export default function Dashboard() {
     );
   };
 
-  React.useEffect(() => {
-    fetch('/api/productstatistics')
+  useEffect(() => {
+    fetch('/api/productstatistics' + (keyword.length > 1 ? `?keyword=${keyword}` : ''))
       .then(results => results.json())
       .then(data => {
-        setData(data.productstatistics);
+        setData(arrangeData(data.productstatistics));
       });
-  }, []);
+  }, [keyword]);
 
+  const classes = useStyles();
   return (
-    <div>
-      <BarChart data={arrangeDataForBarChart(data)} />
-    </div>
+    <Paper className={classes.paper}>
+      <SearchBar onChange={setKeyword} />
+      <BarChart data={data} />
+      <ProductsTable data={data} />
+    </Paper>
   );
 }
