@@ -20,7 +20,7 @@ docker-compose build --no-cache
 
 ```bash
 # Go inside the directory
-cd simple-react-full-stack
+cd marketing-analytics-tool
 
 # Install dependencies
 yarn
@@ -54,3 +54,4 @@ All the source code will be inside **src** directory. Inside src, there is clien
 - [ ] Validation of products and services, right now it's pretty open
 - [ ] Authentication!!! This ain't a free service.
 - [ ] More tests.
+- [ ] Internationalization.
