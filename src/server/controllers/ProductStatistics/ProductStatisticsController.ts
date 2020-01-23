@@ -13,9 +13,15 @@ export class ProductStatisticsController extends CRUDController {
     if (!!req.query.keyword) {
       query = new RegExp('.*' + req.query.keyword + '.*', 'i');
     }
+
+    const startDate = new Date(req.query.startDate);
+    const endDate = new Date(req.query.endDate);
+
+    console.warn(endDate);
+
     ClickData.aggregate(
       [
-        {$match: {productName: query}},
+        {$match: {$and: [{productName: query}, {createdAt: {$gte: startDate, $lte: endDate}}]}},
         {
           $group: {
             _id: {

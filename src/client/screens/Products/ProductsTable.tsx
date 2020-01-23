@@ -11,9 +11,6 @@ import EnhancedTableHeader from '../../components/EnhancedTableHeader';
 import {stableSort, getSorting} from '../../utilities/Sorting';
 
 const useStyles = makeStyles({
-  root: {
-    width: '100%'
-  },
   table: {
     minWidth: 500
   },

@@ -1,9 +1,11 @@
+import moment from 'moment';
 import React from 'react';
 import {fade, makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -15,7 +17,7 @@ const useStyles = makeStyles(theme => ({
       display: 'block'
     }
   },
-  search: {
+  inputs: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
@@ -40,12 +42,21 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('md')]: {
       width: 200
     }
+  },
+  textField: {
+    color: 'white'
   }
 }));
 
-export default function SearchBar(props: {onChange(keyword: string): void}) {
+export default function SearchBar(props: {
+  startDate: Date;
+  endDate: Date;
+  setKeyword(keyword: string): void;
+  handleStartDateChange(startDate: Date): void;
+  handleEndDateChange(startDate: Date): void;
+}) {
   const classes = useStyles();
-  const {onChange} = props;
+  const {setKeyword, handleEndDateChange, handleStartDateChange, startDate, endDate} = props;
 
   return (
     <div className={classes.grow}>
@@ -54,10 +65,10 @@ export default function SearchBar(props: {onChange(keyword: string): void}) {
           <Typography className={classes.title} variant='h6' noWrap>
             Product Clicks by Source
           </Typography>
-          <div className={classes.search}>
+          <div className={classes.inputs}>
             <InputBase
               onChange={e => {
-                onChange(e.target.value);
+                setKeyword(e.target.value);
               }}
               placeholder='Search…'
               classes={{
@@ -65,6 +76,43 @@ export default function SearchBar(props: {onChange(keyword: string): void}) {
                 input: classes.inputInput
               }}
               inputProps={{'aria-label': 'search'}}
+            />
+          </div>
+          <div className={classes.inputs}>
+            <TextField
+              id='date'
+              label='Start Date'
+              type='date'
+              defaultValue={moment(startDate).format('YYYY-MM-DD')}
+              className={classes.textField}
+              onChange={e => {
+                handleStartDateChange(new Date(e.target.value));
+              }}
+              InputLabelProps={{
+                shrink: true,
+                className: classes.textField
+              }}
+              InputProps={{
+                className: classes.textField
+              }}
+            />
+          </div>
+          <div className={classes.inputs}>
+            <TextField
+              id='date'
+              label='End Date'
+              type='date'
+              defaultValue={moment(endDate).format('YYYY-MM-DD')}
+              onChange={e => {
+                handleEndDateChange(new Date(e.target.value));
+              }}
+              InputLabelProps={{
+                shrink: true,
+                className: classes.textField
+              }}
+              InputProps={{
+                className: classes.textField
+              }}
             />
           </div>
           <div className={classes.grow} />
