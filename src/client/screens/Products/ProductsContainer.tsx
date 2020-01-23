@@ -11,6 +11,9 @@ import BarChart from '../../components/BarChart';
 import ProductsTable from './ProductsTable';
 
 const useStyles = makeStyles({
+  divider: {
+    marginBottom: 40
+  },
   paper: {
     width: '100%',
     marginBottom: 20
@@ -69,6 +72,7 @@ export default function ProductsContainer() {
         handleEndDateChange={handleEndDateChange}
       />
       <BarChart data={data} />
+      <div className={classes.divider} />
       <ProductsTable data={data} />
     </Paper>
   );
