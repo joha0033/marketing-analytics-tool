@@ -17,8 +17,6 @@ export class ProductStatisticsController extends CRUDController {
     const startDate = new Date(req.query.startDate);
     const endDate = new Date(req.query.endDate);
 
-    console.warn(endDate);
-
     ClickData.aggregate(
       [
         {$match: {$and: [{productName: query}, {createdAt: {$gte: startDate, $lte: endDate}}]}},
