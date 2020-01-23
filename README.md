@@ -1,6 +1,7 @@
 ## Requirements
 
-- Node v13.2.0
+- Docker
+- Node v13.2.0 (for local development)
 
 ## Quick Start
 
@@ -8,12 +9,6 @@
 
 ```
 docker-compose up --build
-```
-
-If you make changes to the `package.json` remember to rebuild with no cache:
-
-```
-docker-compose build --no-cache
 ```
 
 ### Developing locally
@@ -28,6 +23,10 @@ yarn
 # Start development server
 yarn dev
 ```
+
+### Adding Data
+
+Simply add the properly formatted Test Data into the root level `./data` folder and let it process.
 
 ## Documentation
 
@@ -50,8 +49,9 @@ All the source code will be inside **src** directory. Inside src, there is clien
 ### Wishlist:
 
 - [ ] Split Observer.ts in to it's own microservice that has options to monitor an FTP location.
+- [ ] Split mapping out to it's own microservice and admin panel for better metadata
 - [ ] Add more API endpoints for creating products, services, etc
-- [ ] Validation of products and services, right now it's pretty open
+- [ ] Validation of products and services, right now it's pretty open and isn't fault tolerant.
 - [ ] Authentication!!! This ain't a free service.
 - [ ] More tests.
 - [ ] Internationalization.
