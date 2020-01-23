@@ -1,13 +1,11 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './app.css';
 import Main from './screens/Main';
 
-export default class App extends Component {
-  render() {
-    return (
-      <div>
-        <Main />
-      </div>
-    );
-  }
+export default function App() {
+  return (
+    <div>
+      <Main />
+    </div>
+  );
 }

@@ -27,7 +27,7 @@ class Observer extends EventEmitter {
           if (err) {
             console.warn(err);
           }
-          console.log('Successfully renamed - AKA moved!');
+          console.log(`Successfully parsed ${filename}`);
         });
       });
     } catch (error) {
