@@ -1,16 +1,16 @@
-import fs from 'fs';
-import {parse} from 'fast-csv';
-import {ClickData} from '../models/ClickData';
+import fs from "fs";
+import { parse } from "fast-csv";
+import { ClickData } from "../models/ClickData";
 
-import path from 'path';
-import Mapper from './Mapper';
+import path from "path";
+import Mapper from "./Mapper";
 
 class ClickDataParser {
   static parseFile(targetFile: string) {
     // derive global per-file variables
-    const fileParts = path.basename(targetFile, '.csv').split('_');
+    const fileParts = path.basename(targetFile, ".csv").split("_");
     const source = fileParts[0];
-    const month = parseInt(fileParts[1]);
+    const month = parseInt(fileParts[1]) - 1;
     const day = parseInt(fileParts[2]);
     const year = parseInt(fileParts[3]);
 
@@ -18,10 +18,10 @@ class ClickDataParser {
       let stream = fs.createReadStream(targetFile);
       let csvData: string[] = [];
       let csvStream = parse()
-        .on('data', data => {
+        .on("data", data => {
           csvData.push(data);
         })
-        .on('end', function() {
+        .on("end", function() {
           // remove the first line: header
           csvData.shift();
 
@@ -47,6 +47,7 @@ class ClickDataParser {
         });
 
       stream.pipe(csvStream);
+      console.log("processed: " + targetFile);
     } catch (error) {
       console.log(error);
     }

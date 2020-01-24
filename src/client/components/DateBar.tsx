@@ -15,7 +15,8 @@ const useStyles = makeStyles(theme => ({
     display: "none",
     [theme.breakpoints.up("sm")]: {
       display: "block"
-    }
+    },
+    marginLeft: theme.spacing(3)
   },
   inputs: {
     position: "relative",
@@ -57,16 +58,7 @@ export default function DateBar(props: {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <Link
-            to="/"
-            activeStyle={{
-              fontWeight: "bold",
-              color: "red"
-            }}
-          >
-            {"< BACK"}
-          </Link>
-
+          <Link to="/">{"< BACK"}</Link>
           <Typography className={classes.title} variant="h6" noWrap>
             {title}
           </Typography>

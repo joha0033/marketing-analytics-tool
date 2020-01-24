@@ -1,4 +1,4 @@
-import {Document, Schema, Model, model} from 'mongoose';
+import { Document, Schema, Model, model } from "mongoose";
 
 export interface IClickData {
   product: string;
@@ -13,14 +13,14 @@ export interface IClickDataModel extends IClickData, Document {
 }
 
 export var ClickDataSchema: Schema = new Schema({
-  createdAt: Date,
-  product: String,
-  productName: String,
+  createdAt: { type: Date, index: true },
+  product: { type: String, index: true },
+  productName: { type: String, index: true },
   source: String,
   clicks: Number
 });
 
-ClickDataSchema.pre<IClickDataModel>('save', function(next) {
+ClickDataSchema.pre<IClickDataModel>("save", function(next) {
   let now = new Date();
   if (!this.createdAt) {
     this.createdAt = now;
@@ -28,4 +28,7 @@ ClickDataSchema.pre<IClickDataModel>('save', function(next) {
   next();
 });
 
-export const ClickData: Model<IClickDataModel> = model<IClickDataModel>('ClickData', ClickDataSchema);
+export const ClickData: Model<IClickDataModel> = model<IClickDataModel>(
+  "ClickData",
+  ClickDataSchema
+);

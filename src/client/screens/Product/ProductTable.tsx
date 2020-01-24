@@ -9,7 +9,6 @@ import Paper from "@material-ui/core/Paper";
 import { TablePagination, Divider } from "@material-ui/core";
 import EnhancedTableHeader from "../../components/EnhancedTableHeader";
 import { stableSort, getSorting } from "../../utilities/Sorting";
-import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   table: {
@@ -32,8 +31,7 @@ const useStyles = makeStyles({
 });
 
 const headCells = [
-  { id: "id", numeric: false, disablePadding: false, label: "ID" },
-  { id: "name", numeric: false, disablePadding: false, label: "Name" },
+  { id: "createdAt", numeric: false, disablePadding: false, label: "Date" },
   { id: "amazon", numeric: true, disablePadding: false, label: "Amazon" },
   { id: "facebook", numeric: true, disablePadding: false, label: "Facebook" },
   { id: "google", numeric: true, disablePadding: false, label: "Google" },
@@ -41,7 +39,7 @@ const headCells = [
   { id: "twitter", numeric: true, disablePadding: false, label: "Twitter" }
 ];
 
-export default function ProductsTable(props: { data: any }) {
+export default function ProductTable(props: { data: any }) {
   const { data } = props;
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("id");
@@ -72,7 +70,7 @@ export default function ProductsTable(props: { data: any }) {
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
-  const classes = useStyles();
+  const classes = useStyles({});
   return (
     <>
       <Divider variant="fullWidth" />
@@ -91,20 +89,15 @@ export default function ProductsTable(props: { data: any }) {
               .map(
                 (row: {
                   id: string;
-                  productName: string;
+                  createdAt: Date;
                   amazon: number;
                   facebook: number;
                   google: number;
                   linkedin: number;
                   twitter: number;
                 }) => (
-                  <TableRow key={row.id}>
-                    <TableCell component="th" scope="row">
-                      <Link to={`/products/${row.id}`}>{row.id}</Link>
-                    </TableCell>
-                    <TableCell>
-                      <Link to={`/products/${row.id}`}>{row.productName}</Link>
-                    </TableCell>
+                  <TableRow key={row.createdAt.toString()}>
+                    <TableCell>{row.createdAt}</TableCell>
                     <TableCell align="right">{row.amazon}</TableCell>
                     <TableCell align="right">{row.facebook}</TableCell>
                     <TableCell align="right">{row.google}</TableCell>
@@ -126,8 +119,8 @@ export default function ProductsTable(props: { data: any }) {
         component="div"
         count={data.length}
         rowsPerPage={rowsPerPage}
-        page={page}
         className={classes.pagination}
+        page={page}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
