@@ -11,6 +11,10 @@
 docker-compose up --build
 ```
 
+Navigate to:
+
+http://localhost:3000/
+
 ### Developing locally
 
 ```bash
@@ -23,6 +27,10 @@ yarn
 # Start development server
 yarn dev
 ```
+
+Navigate to:
+
+http://localhost:3000/
 
 ### Adding Data
 
@@ -55,3 +63,5 @@ All the source code will be inside **src** directory. Inside src, there is clien
 - [ ] Authentication!!! This ain't a free service.
 - [ ] More tests.
 - [ ] Internationalization.
+- [ ] Get deep linking working
+- [ ] Data pipeline is not fault tolerant
