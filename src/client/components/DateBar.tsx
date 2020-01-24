@@ -11,6 +11,9 @@ const useStyles = makeStyles(theme => ({
   grow: {
     flexGrow: 1
   },
+  link: {
+    color: "white"
+  },
   title: {
     display: "none",
     [theme.breakpoints.up("sm")]: {
@@ -58,7 +61,9 @@ export default function DateBar(props: {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <Link to="/">{"< BACK"}</Link>
+          <Link className={classes.link} to="/">
+            {"< BACK"}
+          </Link>
           <Typography className={classes.title} variant="h6" noWrap>
             {title}
           </Typography>
